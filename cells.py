@@ -136,9 +136,9 @@ class Grid(object):
 		for h in range(self.height):
 			for w in range(self.width):
 				cell = self.cells[h][w]
-				cell.left_wall = self.cells[h][w - 1].right_wall if w > 1 else VWall(True)
+				cell.left_wall = self.cells[h][w - 1].right_wall if w > 0 else VWall(True)
 				cell.right_wall = VWall(w == self.width - 1)
-				cell.top_wall = self.cells[h - 1][w].bot_wall if h > 1 else HWall(True)
+				cell.top_wall = self.cells[h - 1][w].bot_wall if h > 0 else HWall(True)
 				cell.bot_wall = HWall(h == self.height - 1)
 
 	def load_cells(self, grid_map):
@@ -162,13 +162,13 @@ class Grid(object):
 			
 		
 
-cell = Cell(top_wall=Wall(True))
-print(cell.test_left_wall())
-#cell.move_left()
-grid = Grid(3, 3)
-grid.load_cells("111100100010010001001111")
+def cells_test():
+	cell = Cell(top_wall=Wall(True))
+	print(cell.test_left_wall())
+	grid = Grid(3, 3)
+	grid.load_cells("111100100010010001001111")
 
-for r in grid.cells:
-	for c in r:
-		print(c.left_wall.is_on)
+	for r in grid.cells:
+		for c in r:
+			print(c.left_wall.is_on)
 

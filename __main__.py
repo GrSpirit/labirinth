@@ -4,10 +4,11 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from ui_mainform import MainForm
+from cells import *
 
 def main():
     app = QApplication(sys.argv)
-    mainform = MainForm()
+    mainform = MainForm(Grid(3,3))
     mainform.show()
     app.exec_()
 
