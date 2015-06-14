@@ -1,17 +1,36 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class NoCellError(Exception):
+class TextException(Exception):
+	"""docstring for TextException"""
 	def __init__(self, message):
-		super(NoCellError, self).__init__()
+		super(TextException, self).__init__()
 		self.message = message
 
-class FaceWallError(object):
+	def __str__(self):
+		return self.message
+		
+
+class NoCellError(TextException):
+	def __init__(self, message):
+		super(NoCellError, self).__init__(message)
+
+
+class FaceWallError(TextException):
 	"""docstring for FaceWallError"""
 	def __init__(self, message):
-		super(FaceWallError, self).__init__()
-		self.message = message
+		super(FaceWallError, self).__init__(message)
 		
+
+class Point(object):
+    """Point"""
+    def __init__(self, x=0, y=0):
+        super(Point, self).__init__()
+        self.x = x
+        self.y = y
+
+    def __eq__(self, point):
+        return self.x == point.x and self.y == point.y if isinstance(point, Point) else False
 
 class Wall(object):
 	"""Wall between cells"""
@@ -33,10 +52,10 @@ class HWall(Wall):
 		self.top_cell = top_cell
 		self.bot_cell = bot_cell
 
-class Cell(object):
+class Cell(Point):
 	"""Cell on the map"""
-	def __init__(self, left_wall=None, right_wall=None, top_wall=None, bot_wall=None):
-		super(Cell, self).__init__()
+	def __init__(self, x=0, y=0, left_wall=None, right_wall=None, top_wall=None, bot_wall=None):
+		super(Cell, self).__init__(x, y)
 		self.left_wall = left_wall
 		self.right_wall = right_wall
 		self.top_wall = top_wall
@@ -135,7 +154,7 @@ class Grid(object):
 			self.cells = []
 
 	def _init_cells(self):
-		self.cells = [[Cell() for x in range(self.width)] for y in range(self.height)]
+		self.cells = [[Cell(x, y) for x in range(self.width)] for y in range(self.height)]
 		for h in range(self.height):
 			for w in range(self.width):
 				cell = self.cells[h][w]
@@ -150,14 +169,12 @@ class Grid(object):
 			#if (x // (self.width + h // 2) % 2) == 0:
 			if ((x - h) // self.width) == (h * 2):
 				w = (x - h) % (self.width)
-				print('1) h=', h, 'w=', w)
 				if h < self.height:
 					self.cells[h][w].top_wall.is_on = grid_map[x] != '0'
 				else:
 					self.cells[h - 1][w].bot_wall.is_on = grid_map[x] != '0'
 			else: 
 				w = (x - h) % (self.width) + (((x - h) // self.width + 1) % 2) * self.width
-				print('2) h=', h, 'w=', w)
 				if w < self.width:
 					self.cells[h][w].left_wall.is_on = grid_map[x] != '0'
 				else:

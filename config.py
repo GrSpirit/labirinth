@@ -35,6 +35,14 @@ class Config(object):
             self.view_section['cell_height'] = '20'
             self.save()
         return int(self.view_section['cell_height'])
+
+    @property
+    def point_size(self):
+        if 'point_size' not in self.view_section: 
+            self.view_section['point_size'] = '12'
+            self.save()
+        return int(self.view_section['point_size'])
+    
     
     
 
