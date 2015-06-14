@@ -125,11 +125,14 @@ class Cell(object):
 
 class Grid(object):
 	"""Grid of cells"""
-	def __init__(self, width, height):
+	def __init__(self, width=0, height=0):
 		super(Grid, self).__init__()
 		self.width = width
 		self.height = height
-		self._init_cells()
+		if width > 0 and height > 0:
+			self._init_cells()
+		else:
+			self.cells = []
 
 	def _init_cells(self):
 		self.cells = [[Cell() for x in range(self.width)] for y in range(self.height)]
