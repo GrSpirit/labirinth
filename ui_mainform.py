@@ -43,7 +43,7 @@ class MainForm(QWidget):
 
         self.commandEdit = QLineEdit()
         self.commandEdit.setFont(QFont("Courier"))
-        loadButton = QPushButton("Load")
+        loadButton = QPushButton(_("Load"))
         loadButton.clicked.connect(self.loadFile)
 
         commandLayout = QHBoxLayout()
@@ -105,7 +105,7 @@ class MainForm(QWidget):
 
     def loadFile(self):
         #file_name = QFileDialog.getOpenFileName(self, "Open map", '', 'Map file (*.map)')[0]
-        file_name = QFileDialog.getOpenFileName(self, "Open map", '', 'Map file (*.map)')
+        file_name = QFileDialog.getOpenFileName(self, _("Open map"), '', _('Map file ({})').format('*.map'))
         if file_name == '': return
         self.game.loadMap(file_name)
         self.drawGrid()
@@ -118,10 +118,10 @@ class MainForm(QWidget):
         self.timer.stop()
         msg_box = QMessageBox()
         if self.game.is_win():
-            msg_box.setText("WIN!!!")
+            msg_box.setText(_("WIN!!!"))
             msg_box.setIcon(QMessageBox.Information)
         else:
-            msg_box.setText('LOSE')
+            msg_box.setText(_('LOSE'))
             if message:
                 msg_box.setInformativeText(message)
             msg_box.setIcon(QMessageBox.Critical)
@@ -136,5 +136,5 @@ class MainForm(QWidget):
         except TextException as e:
             self.stop(e.message)
         except:
-            self.stop("Unknown error")
+            self.stop(_("Unknown error"))
 

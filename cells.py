@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
+import gettext
+_ = gettext.gettext
 
 class TextException(Exception):
 	"""docstring for TextException"""
@@ -112,33 +114,33 @@ class Cell(Point):
 	@property
 	def left_cell(self):
 		if self.test_left_wall():
-			raise FaceWallError('Faced the left wall')
+			raise FaceWallError(_('Faced the left wall'))
 		if self.left_wall.left_cell is None:
-			raise NoCellError('No left cell')
+			raise NoCellError(_('No left cell'))
 		return self.left_wall.left_cell 
 
 	@property
 	def right_cell(self):
 		if self.test_right_wall():
-			raise FaceWallError('Faced the right wall')
+			raise FaceWallError(_('Faced the right wall'))
 		if self.right_wall.right_cell is None:
-			raise NoCellError('No right cell')
+			raise NoCellError(_('No right cell'))
 		return self.right_wall.right_cell 
 	
 	@property
 	def top_cell(self):
 		if self.test_top_wall():
-			raise FaceWallError('Faced the top wall')
+			raise FaceWallError(_('Faced the top wall'))
 		if self.top_wall.top_cell is None:
-			raise NoCellError('No top cell')
+			raise NoCellError(_('No top cell'))
 		return self.top_wall.top_cell 
 	
 	@property
 	def bot_cell(self):
 		if self.test_bot_wall():
-			raise FaceWallError('Faced the bot wall')
+			raise FaceWallError(_('Faced the bot wall'))
 		if self.bot_wall.bot_cell is None:
-			raise NoCellError('No bot cell')
+			raise NoCellError(_('No bot cell'))
 		return self.bot_wall.bot_cell 
 	
 

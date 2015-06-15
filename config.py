@@ -3,6 +3,11 @@
 
 from configparser import ConfigParser
 
+LOCALE = {
+    'en': 'English',
+    'ru': 'Русский'
+}
+
 class Config(object):
     """docstring for Config"""
     def __init__(self, config_file='labirinth.ini'):

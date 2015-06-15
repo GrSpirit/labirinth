@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from cells import Grid, Point, TextException
+import gettext
+_ = gettext.gettext
 
 class InvalidCommand(TextException):
     """docstring for InvalidCommand"""
@@ -10,10 +12,10 @@ class InvalidCommand(TextException):
 class Game(object):
     """Game"""
     synonyms = {
-        'up': ['u', 'U'],
-        'left': ['l', 'L'],
-        'right': ['r', 'R'],
-        'down': ['d', 'D']
+        'up': ['u', 'U', 'в', 'В'],
+        'left': ['l', 'L', 'л', 'Л'],
+        'right': ['r', 'R', 'п', 'П'],
+        'down': ['d', 'D', 'н', 'Н']
     }
     def __init__(self):
         super(Game, self).__init__()
@@ -66,7 +68,7 @@ class Game(object):
         for key, syn in Game.synonyms.items():
             if cmd in syn:
                 return key
-        raise InvalidCommand("Unknown command: " + cmd)
+        raise InvalidCommand(_("Unknown command: '{}'").format(cmd))
 
     def action_up(self):
         self.current_cell = self.current_cell.top_cell
