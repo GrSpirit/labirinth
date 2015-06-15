@@ -1,9 +1,11 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QFont, QPen, QColor
-from PyQt5.Qt import *
+#from PyQt5.QtWidgets import *
+#from PyQt5.QtGui import QFont, QPen, QColor
+#from PyQt5.Qt import *
+from PyQt4.QtGui import *
+from PyQt4.Qt import *
 from cells import TextException
 from config import config
 from game import Game
@@ -82,13 +84,13 @@ class MainForm(QWidget):
 
         
         # Start position
-        (x, y) = (self.game.start_pos.x, self.game.start_pos.y)
+        (x, y) = (self.game.start_cell.x, self.game.start_cell.y)
         x = x * self.cell_width + (self.cell_width - self.point_size) / 2
         y = y * self.cell_height + (self.cell_height - self.point_size) / 2
         self.scene.addEllipse(x, y, self.point_size, self.point_size, self.start_pen)
         
         # Target position
-        (x, y) = (self.game.target_pos.x, self.game.target_pos.y)
+        (x, y) = (self.game.target_cell.x, self.game.target_cell.y)
         x = x * self.cell_width + (self.cell_width - self.point_size) / 2
         y = y * self.cell_height + (self.cell_height - self.point_size) / 2
         self.scene.addEllipse(x, y, self.point_size, self.point_size, self.target_pen)
@@ -102,7 +104,8 @@ class MainForm(QWidget):
 
 
     def loadFile(self):
-        file_name = QFileDialog.getOpenFileName(self, "Open map", '', 'Map file (*.map)')[0]
+        #file_name = QFileDialog.getOpenFileName(self, "Open map", '', 'Map file (*.map)')[0]
+        file_name = QFileDialog.getOpenFileName(self, "Open map", '', 'Map file (*.map)')
         if file_name == '': return
         self.game.loadMap(file_name)
         self.drawGrid()
@@ -123,6 +126,7 @@ class MainForm(QWidget):
                 msg_box.setInformativeText(message)
             msg_box.setIcon(QMessageBox.Critical)
         msg_box.exec_()
+        self.game.reset()
 
     def next_step(self):
         try:

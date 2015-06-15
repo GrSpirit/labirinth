@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PyQt5.QtWidgets import QApplication, qApp
+#from PyQt5.QtWidgets import QApplication, qApp
+from PyQt4.QtGui import QApplication, qApp
 from ui_mainform import MainForm
 from cells import *
 

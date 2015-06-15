@@ -18,8 +18,8 @@ class Game(object):
     def __init__(self):
         super(Game, self).__init__()
         self.grid = Grid()
-        self.start_pos = Point()
-        self.target_pos = Point()
+        self.start_cell = None
+        self.target_cell = None
         self.current_cell = None
         
         # Define actions
@@ -30,6 +30,9 @@ class Game(object):
             'right': self.action_right
         }
 
+    def reset(self):
+        self.current_cell = self.start_cell
+
     def loadMap(self, file_name):
         with open(file_name, 'r') as map_file:
             # Read size
@@ -37,23 +40,27 @@ class Game(object):
             (width, height) = map(lambda x: int(x), s.strip().split(' '))
 
             # Read start position
+            start_point = Point()
             s = map_file.readline()
-            (self.start_pos.x, self.start_pos.y) = map(lambda x: int(x), s.strip().split(' '))
+            (start_point.x, start_point.y) = map(lambda x: int(x), s.strip().split(' '))
  
             # Read target position
+            target_point = Point()
             s = map_file.readline()
-            (self.target_pos.x, self.target_pos.y) = map(lambda x: int(x), s.strip().split(' '))
+            (target_point.x, target_point.y) = map(lambda x: int(x), s.strip().split(' '))
 
             # Read map
             s = map_file.read().replace('\n', '').replace(' ', '')
             self.grid = Grid(width, height)
             self.grid.load_cells(s)
-            self.current_cell = self.grid.cells[self.start_pos.y][self.start_pos.x]
+            self.start_cell = self.grid.cells[start_point.y][start_point.x]
+            self.current_cell = self.start_cell
+            self.target_cell = self.grid.cells[target_point.y][target_point.x]
    
     def play(self, command_str):
         self.command_str = command_str
         self.command_ptr = 0
-        self.current_cell = self.grid.cells[self.start_pos.y][self.start_pos.x]
+        self.current_cell = self.start_cell
 
     def action_name(cmd):
         for key, syn in Game.synonyms.items():
@@ -74,7 +81,7 @@ class Game(object):
         self.current_cell = self.current_cell.right_cell
 
     def is_win(self):
-        return self.current_cell == self.target_pos
+        return self.current_cell == self.target_cell
 
     def is_finish(self):
         return self.command_ptr >= len(self.command_str)

@@ -166,7 +166,6 @@ class Grid(object):
 	def load_cells(self, grid_map):
 		for x in range(len(grid_map)):
 			h = x // (self.width + self.width + 1)
-			#if (x // (self.width + h // 2) % 2) == 0:
 			if ((x - h) // self.width) == (h * 2):
 				w = (x - h) % (self.width)
 				if h < self.height:
