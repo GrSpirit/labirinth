@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from cells import Grid, Point, TextException
-import gettext
-_ = gettext.gettext
+#import gettext
+#_ = gettext.gettext
 
 class InvalidCommand(TextException):
     """docstring for InvalidCommand"""

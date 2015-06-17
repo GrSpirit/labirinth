@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-import gettext
-_ = gettext.gettext
+#import gettext
+#_ = gettext.gettext
 
 class TextException(Exception):
 	"""docstring for TextException"""

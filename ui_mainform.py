@@ -12,7 +12,7 @@ from game import Game
 
 class MainForm(QWidget):
     """docstring for MainForm"""
-    def __init__(self, grid):
+    def __init__(self):
         super(MainForm, self).__init__()
         self.game = Game()
 
