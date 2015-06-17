@@ -7,12 +7,13 @@ import sys
 import gettext
 from PyQt4.QtGui import QApplication, qApp
 from ui_mainform import MainForm
+from config import config
 
 #basepath = os.path.abspath(os.path.dirname(sys.argv[0]))
 basepath = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(basepath, 'locale')
-lang = gettext.translation('main', localedir=localedir, languages=['ru'])
-lang.install('main')
+lang = gettext.translation(config.domain, localedir=localedir, languages=[config.locale])
+lang.install(config.domain)
 
 def main():
     mainform = MainForm()

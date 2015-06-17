@@ -28,6 +28,13 @@ class Config(object):
         return self.parser['View']
 
     @property
+    def default_section(self):
+        if 'Default' not in self.parser: 
+            self.parser['Default'] = {}
+            self.save()
+        return self.parser['Default']
+
+    @property
     def cell_width(self):
         if 'cell_width' not in self.view_section: 
             self.view_section['cell_width'] = '20'
@@ -48,7 +55,20 @@ class Config(object):
             self.save()
         return int(self.view_section['point_size'])
     
+    @property
+    def locale(self):
+        if 'locale' not in self.default_section:
+            self.default_section['locale'] = 'ru'
+            self.save()
+        return self.default_section['locale']
     
-    
+    @property
+    def domain(self):
+        if 'domain' not in self.default_section:
+            self.default_section['domain'] = 'main'
+            self.save()
+        return self.default_section['domain']
 
+    
+    
 config = Config()
