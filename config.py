@@ -69,6 +69,13 @@ class Config(object):
             self.save()
         return self.default_section['domain']
 
+    @property
+    def timer_interval(self):
+        if 'timer' not in self.default_section:
+            self.default_section['timer'] = '500'
+            self.save()
+        return int(self.default_section['timer'])
+
     
     
 config = Config()

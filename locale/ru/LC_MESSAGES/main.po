@@ -76,3 +76,27 @@ msgstr "Нет клетки снизу"
 #: game.py:71
 msgid "Unknown command: '{}'"
 msgstr "Неизвестная команда: '{}'"
+
+#: game.py:16
+msgid "Empty command string"
+msgstr "Не заданы команды"
+
+#: game.py:22
+msgid "Empty grid"
+msgstr "Не задана карта"
+
+#: ui_mainform.py:59
+msgid "U = up"
+msgstr "В = вВерх"
+
+#: ui_mainform.py:59
+msgid "D = down"
+msgstr "Н = вНиз"
+
+#: ui_mainform.py:59
+msgid "L = left"
+msgstr "л = вЛево"
+
+#: ui_mainform.py:59
+msgid "R = right"
+msgstr "п = вПраво"

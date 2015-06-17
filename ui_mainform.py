@@ -6,6 +6,7 @@
 #from PyQt5.Qt import *
 from PyQt4.QtGui import *
 from PyQt4.Qt import *
+from PyQt4 import QtCore
 from cells import TextException
 from config import config
 from game import Game
@@ -20,48 +21,62 @@ class MainForm(QWidget):
         super(MainForm, self).__init__()
         self.game = Game()
 
-        mainLayout = QVBoxLayout()
-        self.setLayout(mainLayout)
-        self.resize(320, 240)
-        
+        # Settings
         self.cell_height = config.cell_height
         self.cell_width = config.cell_width
         self.point_size = config.point_size
 
+        # Graphic scene
         self.scene = QGraphicsScene()
         self.pen = QPen(Qt.green)
         self.wall_pen = QPen(Qt.black)
         self.wall_pen.setWidth(2)
-
         self.start_pen = QPen(Qt.black)
         self.current_pen = QPen(Qt.red)
         self.current_pen.setWidth(2)
         self.target_pen = QPen(Qt.green)
         self.target_pen.setWidth(2)
 
-        self.scene.addLine(0,0,0,20, self.pen)
+        # Graphic view
         view = QGraphicsView()
         view.resize(self.size())
         view.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         view.setScene(self.scene)
 
+        # Commands
         self.commandEdit = QLineEdit()
         self.commandEdit.setFont(QFont("Courier"))
         loadButton = QPushButton(_("Load"))
         loadButton.clicked.connect(self.loadFile)
+        loadShortcut = QShortcut(QKeySequence.Open, self)
+        loadShortcut.activated.connect(self.loadFile)
 
         commandLayout = QHBoxLayout()
         commandLayout.addWidget(self.commandEdit)
         commandLayout.addWidget(loadButton)
 
-        mainLayout.addWidget(view)
-        mainLayout.addLayout(commandLayout)
-        self.commandEdit.setFocus()
+        # Help text
+        helpText = QLabel("{}\n{}\n{}\n{}\n{}".format(_("Commands:"), _("U = up"), _("D = down"), _("L = left"), _("R = right")))
 
+        # Layout
+        mainLayout = QVBoxLayout()
+        topLayout = QHBoxLayout()
+        helpLayout = QVBoxLayout()
+        topLayout.addWidget(view)
+        topLayout.addLayout(helpLayout)
+        helpLayout.addWidget(helpText)
+        mainLayout.addLayout(topLayout)
+        mainLayout.addLayout(commandLayout)
+        self.setLayout(mainLayout)
+        self.resize(320, 240)
+        
+        # Setup timer
         self.timer = QTimer(self)
-        self.timer.setInterval(500)
+        self.timer.setInterval(config.timer_interval)
         self.timer.timeout.connect(self.next_step)
         self.commandEdit.returnPressed.connect(self.start)
+
+        self.commandEdit.setFocus()
 
     def drawGrid(self):
         self.scene.clear()
