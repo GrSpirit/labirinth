@@ -4,11 +4,24 @@ from cells import Grid, Point, TextException
 #import gettext
 #_ = gettext.gettext
 
-class InvalidCommand(TextException):
+class UnknownCommand(TextException):
     """docstring for InvalidCommand"""
     def __init__(self, message):
         super(InvalidCommand, self).__init__(message)
         
+
+class EmptyCommandStrError(TextException):
+    """docstring for EmptyCommandStrError"""
+    def __init__(self):
+        super(EmptyCommandStrError, self).__init__(_("Empty command string"))
+
+
+class EmptyGridError(TextException):
+    """docstring for EmptyGridError"""
+    def __init__(self):
+        super(EmptyGridError, self).__init__(_("Empty grid"))
+
+
 class Game(object):
     """Game"""
     synonyms = {
@@ -60,15 +73,20 @@ class Game(object):
             self.target_cell = self.grid.cells[target_point.y][target_point.x]
    
     def play(self, command_str):
-        self.command_str = command_str
+        self.command_str = command_str.strip()
+        if len(self.command_str) == 0:
+            raise EmptyCommandStrError()
         self.command_ptr = 0
+
+        if self.grid.width == 0 or self.grid.height == 0:
+            raise EmptyGridError()
         self.current_cell = self.start_cell
 
     def action_name(cmd):
         for key, syn in Game.synonyms.items():
             if cmd in syn:
                 return key
-        raise InvalidCommand(_("Unknown command: '{}'").format(cmd))
+        raise UnknownCommand(_("Unknown command: '{}'").format(cmd))
 
     def action_up(self):
         self.current_cell = self.current_cell.top_cell

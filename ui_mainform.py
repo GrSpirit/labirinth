@@ -10,6 +10,10 @@ from cells import TextException
 from config import config
 from game import Game
 
+class MessageType():
+    Error = QMessageBox.Critical
+
+
 class MainForm(QWidget):
     """docstring for MainForm"""
     def __init__(self):
@@ -101,8 +105,6 @@ class MainForm(QWidget):
         y = y * self.cell_height + (self.cell_height - self.point_size) / 2
         self.scene.addEllipse(x, y, self.point_size, self.point_size, self.current_pen)
 
-
-
     def loadFile(self):
         #file_name = QFileDialog.getOpenFileName(self, "Open map", '', 'Map file (*.map)')[0]
         file_name = QFileDialog.getOpenFileName(self, _("Open map"), '', _('Map file ({})').format('*.map'))
@@ -110,9 +112,20 @@ class MainForm(QWidget):
         self.game.loadMap(file_name)
         self.drawGrid()
 
+    def showMessage(self, text, msg_type):
+        msg_box = QMessageBox(self)
+        msg_box.setText(text)
+        msg_box.setIcon(msg_type)
+        msg_box.show()
+
     def start(self):
-        self.game.play(self.commandEdit.text())
-        self.timer.start()
+        try:
+            self.game.play(self.commandEdit.text())
+            self.timer.start()
+        except TextException as e:
+            self.showMessage(e.message, MessageType.Error)
+        except:
+            self.showMessage(_("Unknown error"), MessageType.Error)
 
     def stop(self, message=''):
         self.timer.stop()
