@@ -46,14 +46,18 @@ class MainForm(QWidget):
         # Commands
         self.commandEdit = QLineEdit()
         self.commandEdit.setFont(QFont("Courier"))
+        self.commandEdit.returnPressed.connect(self.start)
         loadButton = QPushButton(_("Load"))
         loadButton.clicked.connect(self.loadFile)
         loadShortcut = QShortcut(QKeySequence.Open, self)
         loadShortcut.activated.connect(self.loadFile)
+        runButton = QPushButton(_("Run"))
+        runButton.clicked.connect(self.start)
 
         commandLayout = QHBoxLayout()
         commandLayout.addWidget(self.commandEdit)
-        commandLayout.addWidget(loadButton)
+        #commandLayout.addWidget(loadButton)
+        commandLayout.addWidget(runButton)
 
         # Help text
         helpText = QLabel("{}\n{}\n{}\n{}\n{}".format(_("Commands:"), _("U = up"), _("D = down"), _("L = left"), _("R = right")))
@@ -64,7 +68,10 @@ class MainForm(QWidget):
         helpLayout = QVBoxLayout()
         topLayout.addWidget(view)
         topLayout.addLayout(helpLayout)
+
         helpLayout.addWidget(helpText)
+        helpLayout.addWidget(loadButton)
+
         mainLayout.addLayout(topLayout)
         mainLayout.addLayout(commandLayout)
         self.setLayout(mainLayout)
@@ -74,7 +81,6 @@ class MainForm(QWidget):
         self.timer = QTimer(self)
         self.timer.setInterval(config.timer_interval)
         self.timer.timeout.connect(self.next_step)
-        self.commandEdit.returnPressed.connect(self.start)
 
         self.commandEdit.setFocus()
 
@@ -155,6 +161,7 @@ class MainForm(QWidget):
             msg_box.setIcon(QMessageBox.Critical)
         msg_box.exec_()
         self.game.reset()
+        self.drawGrid()
 
     def next_step(self):
         try:

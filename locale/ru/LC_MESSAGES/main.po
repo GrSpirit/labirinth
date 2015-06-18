@@ -17,27 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ui_mainform.py:49
+#: ui_mainform.py:49 ui_mainform.py:50
 msgid "Load"
 msgstr "Загрузить"
 
-#: ui_mainform.py:125
+#: ui_mainform.py:125 ui_mainform.py:131
 msgid "Open map"
 msgstr "Открыть карту"
 
-#: ui_mainform.py:125
+#: ui_mainform.py:125 ui_mainform.py:131
 msgid "Map file ({})"
 msgstr "Файл карты ({})"
 
-#: ui_mainform.py:149
+#: ui_mainform.py:149 ui_mainform.py:155
 msgid "WIN!!!"
 msgstr "ПОБЕДА!!!"
 
-#: ui_mainform.py:152
+#: ui_mainform.py:152 ui_mainform.py:158
 msgid "LOSE"
 msgstr "ПОРАЖЕНИЕ"
 
-#: ui_mainform.py:167 ui_mainform.py:143
+#: ui_mainform.py:167 ui_mainform.py:143 ui_mainform.py:149 ui_mainform.py:174
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
@@ -85,22 +85,26 @@ msgstr "Не заданы команды"
 msgid "Empty grid"
 msgstr "Не задана карта"
 
-#: ui_mainform.py:59
+#: ui_mainform.py:59 ui_mainform.py:63
 msgid "U = up"
 msgstr "В = вВерх"
 
-#: ui_mainform.py:59
+#: ui_mainform.py:59 ui_mainform.py:63
 msgid "D = down"
 msgstr "Н = вНиз"
 
-#: ui_mainform.py:59
+#: ui_mainform.py:59 ui_mainform.py:63
 msgid "L = left"
 msgstr "Л = вЛево"
 
-#: ui_mainform.py:59
+#: ui_mainform.py:59 ui_mainform.py:63
 msgid "R = right"
 msgstr "П = вПраво"
 
-#: ui_mainform.py:59
+#: ui_mainform.py:59 ui_mainform.py:63
 msgid "Commands:"
 msgstr "Команды:"
+
+#: ui_mainform.py:54
+msgid "Run"
+msgstr "Пуск"
