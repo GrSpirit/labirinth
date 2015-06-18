@@ -17,27 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ui_mainform.py:51
+#: ui_mainform.py:49
 msgid "Load"
 msgstr "Загрузить"
 
-#: ui_mainform.py:113
+#: ui_mainform.py:125
 msgid "Open map"
 msgstr "Открыть карту"
 
-#: ui_mainform.py:113
+#: ui_mainform.py:125
 msgid "Map file ({})"
 msgstr "Файл карты ({})"
 
-#: ui_mainform.py:126
+#: ui_mainform.py:149
 msgid "WIN!!!"
 msgstr "ПОБЕДА!!!"
 
-#: ui_mainform.py:129
+#: ui_mainform.py:152
 msgid "LOSE"
 msgstr "ПОРАЖЕНИЕ"
 
-#: ui_mainform.py:144
+#: ui_mainform.py:167 ui_mainform.py:143
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
@@ -73,7 +73,7 @@ msgstr "Столкновение со стеной снизу"
 msgid "No bot cell"
 msgstr "Нет клетки снизу"
 
-#: game.py:71
+#: game.py:89
 msgid "Unknown command: '{}'"
 msgstr "Неизвестная команда: '{}'"
 
@@ -95,8 +95,12 @@ msgstr "Н = вНиз"
 
 #: ui_mainform.py:59
 msgid "L = left"
-msgstr "л = вЛево"
+msgstr "Л = вЛево"
 
 #: ui_mainform.py:59
 msgid "R = right"
-msgstr "п = вПраво"
+msgstr "П = вПраво"
+
+#: ui_mainform.py:59
+msgid "Commands:"
+msgstr "Команды:"

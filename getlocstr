@@ -1,0 +1,6 @@
+#! /bin/bash
+if [ "$1" != "-b" ]; then
+	xgettext -L python -j -o locale/ru/LC_MESSAGES/main.po --omit-header *.py
+else
+	msgfmt locale/ru/LC_MESSAGES/main.po -o locale/ru/LC_MESSAGES/main.mo 
+fi
