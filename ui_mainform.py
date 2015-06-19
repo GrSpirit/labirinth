@@ -44,15 +44,19 @@ class MainForm(QWidget):
         view.setScene(self.scene)
 
         # Commands
-        self.commandEdit = QLineEdit()
+        self.timer = QTimer(self)
+        self.commandEdit = QLineEdit(self)
         self.commandEdit.setFont(QFont("Courier"))
         self.commandEdit.returnPressed.connect(self.start)
-        loadButton = QPushButton(_("Load"))
+        loadButton = QPushButton(_("Load"), self)
         loadButton.clicked.connect(self.loadFile)
         loadShortcut = QShortcut(QKeySequence.Open, self)
         loadShortcut.activated.connect(self.loadFile)
+
         runButton = QPushButton(_("Run"))
         runButton.clicked.connect(self.start)
+        stopShortcut = QShortcut(Qt.Key_Escape, self)
+        stopShortcut.activated.connect(self.timer.stop)
 
         commandLayout = QHBoxLayout()
         commandLayout.addWidget(self.commandEdit)
@@ -78,7 +82,6 @@ class MainForm(QWidget):
         self.resize(320, 240)
         
         # Setup timer
-        self.timer = QTimer(self)
         self.timer.setInterval(config.timer_interval)
         self.timer.timeout.connect(self.next_step)
 
@@ -165,9 +168,9 @@ class MainForm(QWidget):
 
     def next_step(self):
         try:
-            if not self.game.next():
-                self.stop()
+            is_next = self.game.next()
             self.drawGrid()
+            if not is_next: self.stop()
         except TextException as e:
             self.stop(e.message)
         except:
