@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from cells import Grid, Point, TextException
+import io
 #import gettext
 #_ = gettext.gettext
 
@@ -38,7 +39,7 @@ class EmptyGridError(TextException):
 
 class TreeNode(object):
     """docstring for TreeNode"""
-    def __init__(self, value, childs=[]):
+    def __init__(self, value, leftNode=None, rightNode=None):
         super(TreeNode, self).__init__()
         self.value = value
         self.left_node = left_node
@@ -60,21 +61,28 @@ class Expression(object):
     def __init__(self, string):
         super(Expression, self).__init__()
         self.string = string
+        self.istr = io.StringIO(string)
 
     def build(self):
-        self.root = self.parse(self.string)
+        self.root = self.parse()
 
-    def read_command(self, substr):
-        a = substr[0]
+    def read_command(self):
+        a = self.istr.read()
         if action_name(a):
             return ('action', action_name(a))
         if a in ('+', '*'):
             return ('calc', a)
         raise None
 
-    def parse(self, substr):
-        com = self.read_command(substr)
-        leaf = TreeLeaf(s1)
+    def parse(self):
+        com = self.read_command()
+        node = TreeLeaf(com[1])
+
+        ex = self.read_command()
+        while ex:
+            if ex[1] == '+':
+                n = TreeNode(ex[1], leftNode=node, rightNode=self.parse())
+            leaf = TreeLeaf(s1)
         
 
 class Game(object):
