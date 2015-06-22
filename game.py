@@ -4,6 +4,20 @@ from cells import Grid, Point, TextException
 #import gettext
 #_ = gettext.gettext
 
+action_synonyms = {
+    'up': ['u', 'U', 'в', 'В'],
+    'left': ['l', 'L', 'л', 'Л'],
+    'right': ['r', 'R', 'п', 'П'],
+    'down': ['d', 'D', 'н', 'Н']
+}
+
+def action_name(cmd):
+    for key, syn in action_synonyms.items():
+        if cmd in syn:
+            return key
+    return ''
+
+
 class UnknownCommand(TextException):
     """docstring for InvalidCommand"""
     def __init__(self, message):
@@ -22,14 +36,49 @@ class EmptyGridError(TextException):
         super(EmptyGridError, self).__init__(_("Empty grid"))
 
 
+class TreeNode(object):
+    """docstring for TreeNode"""
+    def __init__(self, value, childs=[]):
+        super(TreeNode, self).__init__()
+        self.value = value
+        self.left_node = left_node
+        self.right_node = right_node
+
+
+class TreeLeaf(TreeNode):
+    """docstring for TreeLeaf"""
+    def __init__(self, value):
+        super(TreeLeaf, self).__init__(value)        
+
+      
+class Expression(object):
+    """Alegbraic Expression"""
+    command_type = {
+        'action': ['up', 'down', 'left', 'right'],
+        'calc': ['+', '*']
+    }
+    def __init__(self, string):
+        super(Expression, self).__init__()
+        self.string = string
+
+    def build(self):
+        self.root = self.parse(self.string)
+
+    def read_command(self, substr):
+        a = substr[0]
+        if action_name(a):
+            return ('action', action_name(a))
+        if a in ('+', '*'):
+            return ('calc', a)
+        raise None
+
+    def parse(self, substr):
+        com = self.read_command(substr)
+        leaf = TreeLeaf(s1)
+        
+
 class Game(object):
     """Game"""
-    synonyms = {
-        'up': ['u', 'U', 'в', 'В'],
-        'left': ['l', 'L', 'л', 'Л'],
-        'right': ['r', 'R', 'п', 'П'],
-        'down': ['d', 'D', 'н', 'Н']
-    }
     def __init__(self):
         super(Game, self).__init__()
         self.grid = Grid()
@@ -82,12 +131,6 @@ class Game(object):
             raise EmptyGridError()
         self.current_cell = self.start_cell
 
-    def action_name(cmd):
-        for key, syn in Game.synonyms.items():
-            if cmd in syn:
-                return key
-        raise UnknownCommand(_("Unknown command: '{}'").format(cmd))
-
     def action_up(self):
         self.current_cell = self.current_cell.top_cell
 
@@ -108,7 +151,10 @@ class Game(object):
 
     def next(self):
         cmd = self.command_str[self.command_ptr]
-        self.actions[Game.action_name(cmd)]()
+        action = action_name(cmd)
+        if not action:
+            raise UnknownCommand(_("Unknown command: '{}'").format(cmd))
+        self.actions[](action)
         self.command_ptr += 1
         return not self.is_finish()
 
