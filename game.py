@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from cells import Grid, Point, TextException
+from expression import Expression
 #import gettext
 #_ = gettext.gettext
 
